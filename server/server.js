@@ -1,4 +1,4 @@
-// chat-app
+// chat-app for node course
 const path = require("path");
 const express = require("express");
 
