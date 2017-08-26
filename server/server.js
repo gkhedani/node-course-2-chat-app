@@ -14,6 +14,6 @@ var app = express();
 // create static middleware to serve up the public folder
 app.use(express.static(publicPath));
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`Server started at port ${port}`);
 });
