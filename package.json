@@ -1,7 +1,7 @@
 {
   "name": "chat-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "node course",
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
