@@ -32,12 +32,13 @@ io.on("connection", (socket) => {
   socket.broadcast.emit("newMessage",
     generateMessage("Admin", "New user joined us!"));
 
-  socket.on("createMessage", (newMsg) => {
+  socket.on("createMessage", (newMsg, callback) => {
       console.log("message received on server", newMsg);
       // emits the message to all connections
       io.emit("newMessage",
         generateMessage(newMsg.from, newMsg.text));
-        
+
+      callback("This is from the server.");  
       // broadcast to all except me
       // socket.broadcast.emit("newMessage", {
       //   from: newMsg.from,
