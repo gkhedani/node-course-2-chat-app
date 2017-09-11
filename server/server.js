@@ -54,9 +54,12 @@ io.on("connection", (socket) => {
 
   socket.on("createMessage", (newMsg, callback) => {
       console.log("message received on server", newMsg);
-      // emits the message to all connections
-      io.emit("newMessage",
-        generateMessage(newMsg.from, newMsg.text));
+      let user = users.getUser(socket.id);
+      if (user && isRealString(newMsg.text)) {
+        // emits the message to the room
+        io.to(user.room).emit("newMessage",
+          generateMessage(user.name, newMsg.text));
+      }
 
       callback("This is from the server.");
       // broadcast to all except me
@@ -68,8 +71,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("createLocationMessage", (coords) => {
-    io.emit("newLocationMessage", generateLocationMessage("Admin", coords.latitude,
-    coords.longitude));
+    let user = users.getUser(socket.id);
+    if (user) {
+      io.to(user.room).emit("newLocationMessage",
+      generateLocationMessage(user.name, coords.latitude,
+      coords.longitude));
+    }
   });
   socket.on("disconnect", () => {
     console.log("Disconnected from the client");
